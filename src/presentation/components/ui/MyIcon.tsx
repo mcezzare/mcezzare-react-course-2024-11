@@ -10,7 +10,7 @@ interface Props {
 export const MyIcon = ( { name, color, white = false }: Props ) => {
 
   const theme = useTheme();
-  console.log( theme );
+  // console.log( theme );
 
   if ( white ) {
     color = theme[ 'color-info-100' ];
