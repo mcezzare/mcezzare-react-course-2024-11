@@ -35,7 +35,7 @@ tesloApi.interceptors.request.use(
   }
 
 );
-
+console.log( tesloApi.options );
 export {
   tesloApi,
 };

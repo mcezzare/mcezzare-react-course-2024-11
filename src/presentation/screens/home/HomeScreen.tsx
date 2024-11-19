@@ -3,7 +3,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 
 
 export const HomeScreen = () => {
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore();
 
 
   return (
@@ -11,11 +11,11 @@ export const HomeScreen = () => {
       style={ {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       } }
     >
 
-      <Text style={ { fontSize: 30 } }>Hello</Text>
+      <Text style={ { fontSize: 30 } }>Hello { user?.fullName ?? '' }</Text>
 
 
       <Button

@@ -9,32 +9,34 @@ export const registerUser = async ( fullName: string, email: string, password: s
 
   try {
 
-    let payload = JSON.stringify( {
-      'email': email,
-      'password': password,
-      'fullName': fullName,
-    } );
-    console.log( payload );
+    const payload = {
+      email: email,
+      password: password,
+      fullName: fullName,
+    };
 
-    const { data } = await tesloApi.post<AuthResponse>( '/auth/register', {
-      data: payload,
-    } );
+    console.log( 'Request Payload:', payload );
 
-    console.log( data );
+    const { data } = await tesloApi.post<AuthResponse>( '/auth/register', payload );
+
+    console.log( 'Response Data:', data );
 
     if ( data.isActive ) {
       return await authLogin( email, password );
-
     }
-
-
-    // return returnUserToken( data );
 
   } catch ( error ) {
     if ( error instanceof AxiosError ) {
-      console.log( error.message );
+      console.error( 'Error Message:', error.message );
+
+      // Dump all errors
+      if ( error.response ) {
+        console.error( 'Response Status:', error.response.status );
+        console.error( 'Response Data:', error.response.data );
+      }
+    } else {
+      console.error( 'Unexpected Error:', error );
     }
-    console.log( error );
     return null;
   }
 };

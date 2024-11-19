@@ -35,9 +35,16 @@ export const authLogin = async ( email: string, password: string ) => {
 
   } catch ( error ) {
     if ( error instanceof AxiosError ) {
-      console.log( error.message );
+      console.error( 'Error Message:', error.message );
+
+      // Dump all errors
+      if ( error.response ) {
+        console.error( 'Response Status:', error.response.status );
+        console.error( 'Response Data:', error.response.data );
+      }
+    } else {
+      console.error( 'Unexpected Error:', error );
     }
-    console.log( error );
     return null;
   }
 };
@@ -49,7 +56,17 @@ export const authCheckStatus = async () => {
     const { data } = await tesloApi.get<AuthResponse>( '/auth/check-status' );
     return returnUserToken( data );
   } catch ( error ) {
-    console.log( error );
+    if ( error instanceof AxiosError ) {
+      console.error( 'Error Message:', error.message );
+
+      // Dump all errors
+      if ( error.response ) {
+        console.error( 'Response Status:', error.response.status );
+        console.error( 'Response Data:', error.response.data );
+      }
+    } else {
+      console.error( 'Unexpected Error:', error );
+    }
     return null;
   }
 };

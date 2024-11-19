@@ -86,6 +86,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
         {/* Button */ }
         <Layout>
           <Button
+            disabled={ isPosting }
             accessoryRight={ <MyIcon name="arrow-forward-outline" white /> }
             // onPress={ () => console.log( 'click' ) }
             onPress={ onRegister }
@@ -115,7 +116,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
 
 
 
-        <Text>{ JSON.stringify( form, null, 2 ) }</Text>  
+        {/* <Text>{ JSON.stringify( form, null, 2 ) }</Text>   */ }
         <Layout style={ { height: 50 } } />
       </ScrollView>
 
