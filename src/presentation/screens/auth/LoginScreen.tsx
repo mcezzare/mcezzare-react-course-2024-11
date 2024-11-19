@@ -4,10 +4,13 @@ import { MyIcon } from '../../components/ui/MyIcon';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
 
+import { API_URL, STAGE } from '@env';
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 export const LoginScreen = ( { navigation }: Props ) => {
   const { height } = useWindowDimensions();
+
+  console.log( { apiUrl: API_URL, stage: STAGE } )
 
   return (
     <Layout style={ {
@@ -66,7 +69,7 @@ export const LoginScreen = ( { navigation }: Props ) => {
             status="primary"
             category="s1"
             onPress={ () => navigation.navigate( 'RegisterScreen' ) }
-          > Create acccount</Text>
+          > Create acccount { '' }</Text>
         </Layout>
 
 
