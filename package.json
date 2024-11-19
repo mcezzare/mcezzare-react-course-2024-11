@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^7.0.3",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
+    "axios": "^1.7.7",
     "react": "18.3.1",
     "react-native": "0.76.2",
     "react-native-gesture-handler": "^2.21.0",
