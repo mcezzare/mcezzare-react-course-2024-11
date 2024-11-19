@@ -1,6 +1,7 @@
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import { useAuthStore } from '../../store/useAuthStore';
 
+
 export const HomeScreen = () => {
   const { logout } = useAuthStore();
 
@@ -14,7 +15,7 @@ export const HomeScreen = () => {
       } }
     >
 
-      <Text style={ { fontSize: 30 } }>HomeScreen</Text>
+      <Text style={ { fontSize: 30 } }>Hello</Text>
 
 
       <Button
