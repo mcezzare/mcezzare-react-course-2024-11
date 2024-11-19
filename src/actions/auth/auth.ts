@@ -21,15 +21,11 @@ const returnUserToken = ( data: AuthResponse ) => {
 };
 
 
-
-
 export const authLogin = async ( email: string, password: string ) => {
 
   email = email.toLowerCase();
 
-
   try {
-
     const { data } = await tesloApi.post<AuthResponse>( '/auth/login', {
       email,
       password,
@@ -41,6 +37,20 @@ export const authLogin = async ( email: string, password: string ) => {
     if ( error instanceof AxiosError ) {
       console.log( error.message );
     }
+    console.log( error );
+    return null;
+  }
+};
+
+
+export const authCheckStatus = async () => {
+  const { data } = await tesloApi.get<AuthResponse>( '/auth/check-status', {
+
+  } );
+
+  try {
+    return returnUserToken( data );
+  } catch ( error ) {
     console.log( error );
     return null;
   }
