@@ -30,7 +30,7 @@ export const ProductsApp = () => {
           }
         } }>
           <AuthProvider>
-          <StackNavigator />
+            <StackNavigator />
           </AuthProvider>
         </NavigationContainer>
       </ApplicationProvider>

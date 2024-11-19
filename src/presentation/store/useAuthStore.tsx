@@ -11,6 +11,7 @@ export interface AuthState {
 
   login: ( email: string, password: string ) => Promise<boolean>;
   checkStatus: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()( ( set, get ) => ( {
@@ -51,7 +52,12 @@ export const useAuthStore = create<AuthState>()( ( set, get ) => ( {
     // const storeToken = await StorageAdapter.getItem( 'token' );
     // console.log( storeToken );
     return;
-  }
+  },
 
+
+  logout: async () => {
+    await StorageAdapter.removeItem( 'token' );
+    set( { status: 'unauthenticated', token: undefined, user: undefined } );
+  }
 } ) );
 
