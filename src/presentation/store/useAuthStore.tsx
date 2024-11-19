@@ -26,6 +26,7 @@ export const useAuthStore = create<AuthState>()( ( set, get ) => ( {
     }
 
     // TODO: save token and user in storage
+    console.log( resp )
     set( { status: 'authenticated', token: resp.token, user: resp.user } );
 
     return true;

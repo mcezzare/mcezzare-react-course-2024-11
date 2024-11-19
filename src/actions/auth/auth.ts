@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { tesloApi } from '../../config/api/tesloApi';
 import { User } from '../../domain/entities/user';
 import type { AuthResponse } from '../../infrastructure/interfaces/auth.responses';
@@ -29,7 +30,7 @@ export const authLogin = async ( email: string, password: string ) => {
 
   try {
 
-    const { data } = tesloApi.post<AuthResponse>( '/auth/login', {
+    const { data } = await tesloApi.post<AuthResponse>( '/auth/login', {
       email,
       password,
     } );
@@ -37,7 +38,10 @@ export const authLogin = async ( email: string, password: string ) => {
     return returnUserToken( data );
 
   } catch ( error ) {
-    console.error( error );
+    if ( error instanceof AxiosError ) {
+      console.log( error.message );
+    }
+    console.log( error );
     return null;
   }
 };
