@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react-native/no-inline-styles */
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 
 export const HomeScreen = () => {

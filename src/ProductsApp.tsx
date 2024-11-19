@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StackNavigator } from './presentation/navigation/StackNavigator';
 import { useColorScheme } from 'react-native';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { AuthProvider } from './presentation/providers/AuthProvider';
 
 export const ProductsApp = () => {
   const colorScheme = useColorScheme();
@@ -28,7 +29,9 @@ export const ProductsApp = () => {
             notification: theme[ 'color-basic-500' ],
           }
         } }>
+          <AuthProvider>
           <StackNavigator />
+          </AuthProvider>
         </NavigationContainer>
       </ApplicationProvider>
 
