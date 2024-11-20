@@ -4,7 +4,7 @@ import { tesloApi } from '../../config/api/tesloApi';
 import { ProductMapper } from '../../infrastructure/mappers/product.mapper';
 import { Product } from '../../domain/entities/products';
 
-export const getProductsByPage = async ( page: number, limit: number = 20 ): Promise<Product[]> => {
+export const getProductsByPage = async ( page: number, limit: number = 10 ): Promise<Product[]> => {
   try {
     console.log( { page, limit } );
 
