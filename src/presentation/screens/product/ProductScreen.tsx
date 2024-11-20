@@ -4,18 +4,20 @@ import { getProductsById } from '../../../actions/products/get-product-by-id';
 import { useQuery } from '@tanstack/react-query';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
+import { useRef } from 'react';
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 
 export const ProductScreen = ( { route }: Props ) => {
-  const { productId } = route.params;
+  const productIdRef = useRef( route.params.productId );
+
   // console.log( route.productId );
   // useQuery
   // useMutation
   const { data: product } = useQuery( {
-    queryKey: [ 'products', productId ],
+    queryKey: [ 'products', productIdRef.current ],
     staleTime: 1000 * 60 * 5, // 5 minutes
-    queryFn: () => getProductsById( productId ),
+    queryFn: () => getProductsById( productIdRef.current ),
 
   } );
 
