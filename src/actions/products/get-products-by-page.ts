@@ -12,7 +12,7 @@ export const getProductsByPage = async ( page: number, limit: number = 20 ): Pro
     // console.log( data );
     const products = data.map( ProductMapper.tesloProductToEntity );
     // const products = data.map( tesloProduct => ProductMapper.tesloProductToEntity( tesloProduct ) );
-    console.log( products[ 0 ] );
+    // console.log( products[ 0 ] );
     return products;
 
   } catch ( error ) {

@@ -19,6 +19,7 @@ export const LoginScreen = ( { navigation }: Props ) => {
 
   const { height } = useWindowDimensions();
 
+
   const onLogin = async () => {
 
     if ( form.email.length === 0 || form.password.length === 0 ) {
