@@ -10,8 +10,8 @@ interface Props {
   subTitle?: string;
 
 
-  rightAction: () => void;
-  rightActionIcon: string;
+  rightAction?: () => void;
+  rightActionIcon?: string;
 
   children: React.ReactNode;
 
