@@ -1,5 +1,5 @@
 import { Product } from '../../../domain/entities/products';
-import { Layout, List, Text } from '@ui-kitten/components';
+import { Layout, List } from '@ui-kitten/components';
 import { ProductCard } from './ProductCard';
 
 interface Props {
