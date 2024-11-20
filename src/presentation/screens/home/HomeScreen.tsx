@@ -1,10 +1,11 @@
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import { useAuthStore } from '../../store/useAuthStore';
+import { getProductsByPage } from '../../../actions/products/get-products-by-page';
 
 
 export const HomeScreen = () => {
   const { logout, user } = useAuthStore();
-
+  getProductsByPage( 1, 10 );
 
   return (
     <Layout
