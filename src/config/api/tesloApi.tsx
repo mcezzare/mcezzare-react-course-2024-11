@@ -1,5 +1,5 @@
 import { STAGE, API_URL as PROD_URL, API_URL_IOS, API_URL_ANDROID } from '@env';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Platform } from 'react-native';
 import { StorageAdapter } from '../storage/storage-adapter';
 
@@ -37,7 +37,7 @@ const generateCurlCommand = ( config: AxiosRequestConfig ): string => {
   return curl;
 };
 
-// Interceptors
+// Request Interceptors
 tesloApi.interceptors.request.use(
   async ( config ) => {
     // Add token to headers, if exists
@@ -52,6 +52,30 @@ tesloApi.interceptors.request.use(
     return config;
   },
   ( error ) => {
+    return Promise.reject( error );
+  }
+);
+
+// Response Interceptors
+tesloApi.interceptors.response.use(
+  ( response: AxiosResponse ) => {
+    // Log do comando curl e do status code
+    console.debug(
+      `Response CURL: ${ generateCurlCommand( response.config ) } (Status: ${ response.status })`
+    );
+
+    return response;
+  },
+  ( error ) => {
+    // Captura erros e loga o comando curl junto ao status code, se disponível
+    if ( error.response ) {
+      console.debug(
+        `Response CURL: ${ generateCurlCommand( error.config ) } (Status: ${ error.response.status })`
+      );
+    } else {
+      console.debug( `Request failed without response: ${ generateCurlCommand( error.config ) }` );
+    }
+
     return Promise.reject( error );
   }
 );
