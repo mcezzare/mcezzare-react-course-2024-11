@@ -2,8 +2,9 @@ import { AxiosError } from 'axios';
 import { TesloProduct } from '../../infrastructure/interfaces/teslo-products.response';
 import { tesloApi } from '../../config/api/tesloApi';
 import { ProductMapper } from '../../infrastructure/mappers/product.mapper';
+import { Product } from '../../domain/entities/products';
 
-export const getProductsByPage = async ( page: number, limit: number = 20 ) => {
+export const getProductsByPage = async ( page: number, limit: number = 20 ): Promise<Product[]> => {
   try {
     console.log( { page, limit } );
 
@@ -28,6 +29,5 @@ export const getProductsByPage = async ( page: number, limit: number = 20 ) => {
       throw new Error( 'Error getting products' );
 
     }
-    return null;
   }
 };
