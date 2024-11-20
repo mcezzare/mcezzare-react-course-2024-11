@@ -1,9 +1,10 @@
-import { Layout, Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 import { useAuthStore } from '../../store/useAuthStore';
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
 import { useQuery } from '@tanstack/react-query';
-import { Product } from '../../../domain/entities/products';
 import { MainLayout } from '../../layouts/MainLayout';
+import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
+import { ProductList } from '../../components/products/ProductList';
 
 
 export const HomeScreen = () => {
@@ -23,7 +24,12 @@ export const HomeScreen = () => {
       rightAction={ () => { } }
       rightActionIcon='plus-outline'
     >
-      <Text> Hello { user?.fullName ?? '' }</Text>
+      {
+        isLoading
+          ? ( <FullScreenLoader /> )
+          : <ProductList products={ products } />
+      }
+
 
     </MainLayout>
   );
