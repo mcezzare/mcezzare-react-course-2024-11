@@ -9,6 +9,7 @@ import { FlatList } from 'react-native';
 import { FadeInImage } from '../../components/ui/FadeInImage';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Gender, Size } from '../../../domain/entities/products';
+import { MyIcon } from '../../components/ui/MyIcon';
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 
@@ -164,12 +165,22 @@ export const ProductScreen = ( { route }: Props ) => {
               }
 
             </ButtonGroup>
-          </Layout> 
 
 
+            {/* Save Button */ }
+            <Button
+              onPress={ () => console.log( 'Save tap' ) }
+              style={ {
+                marginTop: 24,
+                margin: 8
+              } }
+              accessoryLeft={ <MyIcon name='save-outline' white /> }
+            >Save item
+            </Button>
 
+          </Layout>
 
-
+          <Text>{ JSON.stringify( product, null, 2 ) }</Text>
 
         </Layout>
         {/* Fix ios bottom inacessible    */ }
