@@ -1,6 +1,6 @@
 import { STAGE, API_URL as PROD_URL, API_URL_IOS, API_URL_ANDROID } from '@env';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Platform } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 import { StorageAdapter } from '../storage/storage-adapter';
 
 export const API_URL =
@@ -45,6 +45,7 @@ tesloApi.interceptors.request.use(
     if ( token ) {
       config.headers[ 'Authorization' ] = `Bearer ${ token }`;
     }
+    config.headers[ 'User-Agent' ] = `ProductsApp ${ Platform.OS } 1.0}`
 
     // Log curl \o/
     console.debug( 'Request CURL:', generateCurlCommand( config ) );

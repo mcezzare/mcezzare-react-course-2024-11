@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { MainLayout } from '../../layouts/MainLayout';
 import { getProductsById } from '../../../actions/products/get-product-by-id';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
 import React, { useRef } from 'react';
@@ -18,6 +18,8 @@ interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 export const ProductScreen = ( { route }: Props ) => {
   const productIdRef = useRef( route.params.productId );
   const theme = useTheme();
+  const queryClient = useQueryClient();
+
   // console.log( route.productId );
   // useQuery
   const { data: product } = useQuery( {
@@ -29,10 +31,18 @@ export const ProductScreen = ( { route }: Props ) => {
 
   // useMutation
   const mutation = useMutation( {
-    mutationFn: ( data: Product ) => updateCreateProduct( data ),
+    mutationFn: ( data: Product ) => updateCreateProduct( { ...data, id: productIdRef.current } ),
     onSuccess( data: Product ) {
-      console.log( 'Success' );
-      console.log( { data } );
+      productIdRef.current = data.id; //  will be used in creating
+      queryClient.invalidateQueries( { queryKey: [ 'products', 'infinite' ] } );
+      // queryClient.invalidateQueries( { queryKey: [ 'product', productIdRef.current ] } );
+      // other way withoout invalidate all cache
+      queryClient.setQueryData( [ 'product', productIdRef.current ], data );
+
+      // console.log( 'Success' );
+      // console.log( { data } );
+
+
     },
   } );
 
