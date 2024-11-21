@@ -1,13 +1,18 @@
 import { useAuthStore } from '../../store/useAuthStore';
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { MainLayout } from '../../layouts/MainLayout';
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
 import { ProductList } from '../../components/products/ProductList';
+import { FAB } from '../../components/ui/FAB';
+import { RootStackParams } from '../../navigation/StackNavigator';
 
 
 export const HomeScreen = () => {
   const { logout, user } = useAuthStore();
+
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   // const { isLoading, data: products = [] } = useQuery( {
   //   queryKey: [ 'products', 'infinite' ],
@@ -31,11 +36,12 @@ export const HomeScreen = () => {
 
 
   return (
+    <>
     <MainLayout
       title="TesloShop Products"
       subTitle="Admin section"
-      rightAction={ () => { } }
-      rightActionIcon='plus-outline'
+        // rightAction={ () => { } }
+        // rightActionIcon='plus-outline'
     >
       {
         isLoading
@@ -48,5 +54,14 @@ export const HomeScreen = () => {
 
 
     </MainLayout>
+      <FAB
+        style={ {
+          position: 'absolute',
+          bottom: 30,
+          right: 20,
+        } }
+        iconName={ 'plus-outline' }
+        onPress={ () => { } } />
+    </>
   );
 };
