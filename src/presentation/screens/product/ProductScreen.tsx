@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
 import React, { useRef } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Image } from 'react-native';
 import { FadeInImage } from '../../components/ui/FadeInImage';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Gender, Size, Product } from '../../../domain/entities/products';
@@ -20,7 +20,6 @@ export const ProductScreen = ( { route }: Props ) => {
   const theme = useTheme();
   const queryClient = useQueryClient();
 
-  // console.log( route.productId );
   // useQuery
   const { data: product } = useQuery( {
     queryKey: [ 'products', productIdRef.current ],
@@ -35,14 +34,10 @@ export const ProductScreen = ( { route }: Props ) => {
     onSuccess( data: Product ) {
       productIdRef.current = data.id; //  will be used in creating
       queryClient.invalidateQueries( { queryKey: [ 'products', 'infinite' ] } );
+
       // queryClient.invalidateQueries( { queryKey: [ 'product', productIdRef.current ] } );
-      // other way withoout invalidate all cache
+      // other way without invalidate all cache
       queryClient.setQueryData( [ 'product', productIdRef.current ], data );
-
-      // console.log( 'Success' );
-      // console.log( { data } );
-
-
     },
   } );
 
@@ -69,27 +64,31 @@ export const ProductScreen = ( { route }: Props ) => {
             subTitle={ `Price : ${ values.price }` }
           >
             <ScrollView style={ { flex: 1 } }>
-
               {/* /Images */ }
-              {/* / TODO: fix when no images */ }
-              <Layout>
-                <FlatList
-                  data={ values.images }
-                  keyExtractor={ ( item ) => item }
-                  horizontal
-                  showsHorizontalScrollIndicator={ false }
-                  renderItem={ ( { item } ) => (
-                    <FadeInImage
-                      uri={ item }
-                      style={ { width: 300, height: 300, marginHorizontal: 8 } }
-                    />
-                  ) }
+              <Layout style={ {
+                marginVertical: 10, justifyContent: 'center', alignItems: 'center',
+              } }>
 
-
-                />
+                { ( product.images.length === 0 )
+                  ? <Image
+                    source={ require( '../../../assets/no-product-image.png' ) }
+                    style={ { width: 300, height: 300, marginHorizontal: 8 } }
+                  />
+                  : <FlatList
+                    data={ values.images }
+                    keyExtractor={ ( item ) => item }
+                    horizontal
+                    showsHorizontalScrollIndicator={ false }
+                    renderItem={ ( { item } ) => (
+                      <FadeInImage
+                        uri={ item }
+                        style={ { width: 300, height: 300, marginHorizontal: 8 } }
+                      />
+                    ) }
+                  />
+                }
 
                 {/* /Forms */ }
-
 
                 <Layout style={ { marginHorizontal: 10 } }>
                   <Input

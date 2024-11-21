@@ -61,7 +61,8 @@ export const HomeScreen = () => {
           right: 20,
         } }
         iconName={ 'plus-outline' }
-        onPress={ () => { } } />
+        onPress={ () => navigation.navigate( 'ProductScreen', { productId: 'new' } ) }
+      />
     </>
   );
 };
