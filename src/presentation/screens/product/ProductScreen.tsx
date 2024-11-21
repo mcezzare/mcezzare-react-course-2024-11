@@ -1,17 +1,19 @@
 import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { MainLayout } from '../../layouts/MainLayout';
-import { getProductsById } from '../../../actions/products/get-product-by-id';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ScrollView } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
-import React, { useRef } from 'react';
-import { FlatList, Image } from 'react-native';
-import { FadeInImage } from '../../components/ui/FadeInImage';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Gender, Size, Product } from '../../../domain/entities/products';
+
+import { updateCreateProduct, getProductsById } from '../../../actions/products/';
+
+import { useRef } from 'react';
+import { Product } from '../../../domain/entities/products';
 import { MyIcon } from '../../components/ui/MyIcon';
 import { Formik } from 'formik';
-import { updateCreateProduct } from '../../../actions/products/update-create-product';
+
+import { ProductImages } from '../../components/products/ProductImages';
+import { genders, sizes } from '../../../config/constants/product.constants';
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 
@@ -47,9 +49,9 @@ export const ProductScreen = ( { route }: Props ) => {
   }
 
   // list to components multi choice
-  const sizes: Size[] = [ Size.Xs, Size.S, Size.M, Size.L, Size.Xl, Size.Xxl ];
+  // const sizes: Size[] = [ Size.Xs, Size.S, Size.M, Size.L, Size.Xl, Size.Xxl ];
 
-  const genders: Gender[] = [ Gender.Kid, Gender.Men, Gender.Unisex, Gender.Women ];
+  // const genders: Gender[] = [ Gender.Kid, Gender.Men, Gender.Unisex, Gender.Women ];
 
   return (
     <Formik
@@ -69,24 +71,9 @@ export const ProductScreen = ( { route }: Props ) => {
                 marginVertical: 10, justifyContent: 'center', alignItems: 'center',
               } }>
 
-                { ( product.images.length === 0 )
-                  ? <Image
-                    source={ require( '../../../assets/no-product-image.png' ) }
-                    style={ { width: 300, height: 300, marginHorizontal: 8 } }
-                  />
-                  : <FlatList
-                    data={ values.images }
-                    keyExtractor={ ( item ) => item }
-                    horizontal
-                    showsHorizontalScrollIndicator={ false }
-                    renderItem={ ( { item } ) => (
-                      <FadeInImage
-                        uri={ item }
-                        style={ { width: 300, height: 300, marginHorizontal: 8 } }
-                      />
-                    ) }
-                  />
-                }
+                <ProductImages
+                  images={ values.images }
+                />
 
                 {/* /Forms */ }
 
@@ -226,7 +213,7 @@ export const ProductScreen = ( { route }: Props ) => {
 
                 </Layout>
 
-                <Text>{ JSON.stringify( values, null, 2 ) }</Text>
+                {/* <Text>{ JSON.stringify( values, null, 2 ) }</Text> */ }
 
               </Layout>
               {/* Fix ios bottom inacessible    */ }
