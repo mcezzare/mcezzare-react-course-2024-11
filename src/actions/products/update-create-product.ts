@@ -28,7 +28,7 @@ const updateProduct = async ( product: Partial<Product> ) => {
   try {
     console.log( product );
 
-    console.log( checkedImages );
+    console.log( { checkedImages } );
     const { data } = await tesloApi.patch( `/products/${ id }`, {
       images: checkedImages,
       ...rest,

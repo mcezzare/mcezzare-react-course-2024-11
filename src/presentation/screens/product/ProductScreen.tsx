@@ -1,16 +1,17 @@
 import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { MainLayout } from '../../layouts/MainLayout';
 import { getProductsById } from '../../../actions/products/get-product-by-id';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
 import React, { useRef } from 'react';
 import { FlatList } from 'react-native';
 import { FadeInImage } from '../../components/ui/FadeInImage';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Gender, Size } from '../../../domain/entities/products';
+import { Gender, Size, Product } from '../../../domain/entities/products';
 import { MyIcon } from '../../components/ui/MyIcon';
 import { Formik } from 'formik';
+import { updateCreateProduct } from '../../../actions/products/update-create-product';
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 
@@ -19,13 +20,22 @@ export const ProductScreen = ( { route }: Props ) => {
   const theme = useTheme();
   // console.log( route.productId );
   // useQuery
-  // useMutation
   const { data: product } = useQuery( {
     queryKey: [ 'products', productIdRef.current ],
     staleTime: 1000 * 60 * 5, // 5 minutes
     queryFn: () => getProductsById( productIdRef.current ),
 
   } );
+
+  // useMutation
+  const mutation = useMutation( {
+    mutationFn: ( data: Product ) => updateCreateProduct( data ),
+    onSuccess( data: Product ) {
+      console.log( 'Success' );
+      console.log( { data } );
+    },
+  } );
+
 
   if ( !product ) {
     return ( <MainLayout title=" Loading..." /> );
@@ -39,7 +49,8 @@ export const ProductScreen = ( { route }: Props ) => {
   return (
     <Formik
       initialValues={ product }
-      onSubmit={ values => console.log( values ) }
+      // onSubmit={ values => mutation.mutate(values) }
+      onSubmit={ mutation.mutate }
     >
       {
         ( { handleChange, handleSubmit, values, errors, setFieldValue } ) => (
@@ -101,6 +112,7 @@ export const ProductScreen = ( { route }: Props ) => {
                     value={ values.price.toString() }
                     style={ { marginVertical: 5, flex: 1 } }
                     onChangeText={ handleChange( 'price' ) }
+                    keyboardType="numeric"
                   />
 
                   <Input
@@ -108,6 +120,7 @@ export const ProductScreen = ( { route }: Props ) => {
                     value={ values.stock.toString() }
                     style={ { marginVertical: 5, flex: 1 } }
                     onChangeText={ handleChange( 'stock' ) }
+                    keyboardType="number-pad"
                   />
                 </Layout>
 
@@ -160,7 +173,7 @@ export const ProductScreen = ( { route }: Props ) => {
                       margin: 2,
                       marginTop: 5,
                       marginHorizontal: 15,
-                      fontWeight: 'bold'
+                      fontWeight: 'bold',
                     }
                     }>Genders</Text>
 
@@ -192,12 +205,13 @@ export const ProductScreen = ( { route }: Props ) => {
 
                   {/* Save Button */ }
                   <Button
-                    onPress={ () => console.log( 'Save tap' ) }
+                    onPress={ () => handleSubmit() }
                     style={ {
                       marginTop: 24,
-                      margin: 8
+                      margin: 8,
                     } }
-                    accessoryLeft={ <MyIcon name='save-outline' white /> }
+                    accessoryLeft={ <MyIcon name="save-outline" white /> }
+                    disabled={ mutation.isPending }
                   >Save item
                   </Button>
 
