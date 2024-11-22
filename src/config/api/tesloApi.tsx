@@ -3,6 +3,10 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AppRegistry, Platform } from 'react-native';
 import { StorageAdapter } from '../storage/storage-adapter';
 
+const isCurlDebugRequestEnabled = false;
+const isCurlDebugResponseEnabled = true;
+
+
 export const API_URL =
   STAGE === 'prod'
     ? PROD_URL
@@ -48,7 +52,7 @@ tesloApi.interceptors.request.use(
     config.headers[ 'User-Agent' ] = `ProductsApp ${ Platform.OS } 1.0}`
 
     // Log curl \o/
-    console.debug( 'Request CURL:', generateCurlCommand( config ) );
+    isCurlDebugRequestEnabled ?? console.debug( 'Request CURL:', generateCurlCommand( config ) );
 
     return config;
   },
@@ -61,10 +65,11 @@ tesloApi.interceptors.request.use(
 tesloApi.interceptors.response.use(
   ( response: AxiosResponse ) => {
     // Log do comando curl e do status code
-    console.debug(
-      `Response CURL: ${ generateCurlCommand( response.config ) } (Status: ${ response.status })`
-    );
-
+    if ( isCurlDebugResponseEnabled ) {
+      console.debug(
+        `Response CURL: ${ generateCurlCommand( response.config ) } (Status: ${ response.status })`
+      );
+    }
     return response;
   },
   ( error ) => {
