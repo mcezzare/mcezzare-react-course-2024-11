@@ -19,6 +19,7 @@ export class CameraAdapter {
 
 
   static async getPicturesFromLibrary(): Promise<string[]> {
+    try {
     const response = await launchImageLibrary( {
       mediaType: 'photo',
       quality: 0.7,
@@ -35,6 +36,10 @@ export class CameraAdapter {
 
 
     return [];
+    } catch ( error ) {
+      console.error( error );
+    }
+
   };
 
 
