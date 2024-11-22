@@ -65,7 +65,7 @@ export const ProductScreen = ( { route }: Props ) => {
             setFieldValue( 'images', [ ...values.images, ...photos ] );
 
           } }
-          rightActionIcon="camera-outline"
+          rightActionIcon="image-outline"
         >
 
           <ScrollView style={ { flex: 1 } }>
@@ -184,9 +184,9 @@ export const ProductScreen = ( { route }: Props ) => {
             </Button>
 
 
-            <Text>
+            {/* <Text>
               { JSON.stringify( values, null, 2 ) }
-            </Text> 
+            </Text>  */}
             <Layout style={ { height: 200 } } />
           </ScrollView>
         </MainLayout>

@@ -1,4 +1,89 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+- [Teslo Shop App](#teslo-shop-app)
+  * [Running this project](#running-this-project)
+- [Getting Started](#getting-started)
+  * [Step 1: Start the Metro Server](#step-1--start-the-metro-server)
+  * [Step 2: Start your Application](#step-2--start-your-application)
+    + [For Android](#for-android)
+    + [For iOS](#for-ios)
+  * [Step 3: Modifying your App](#step-3--modifying-your-app)
+  * [Congratulations! :tada:](#congratulations---tada-)
+    + [Now what?](#now-what-)
+- [Troubleshooting](#troubleshooting)
+- [Learn More](#learn-more)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+# Teslo Shop App
+This is Store Shop App to administer products and show usage with [tanstack/react-query](https://tanstack.com/query/latest) and [react-native-ui-kitten](https://akveo.github.io/react-native-ui-kitten/). This app use camera to take pictures or select images from galery. and uload to Backend. 
+
+This app use as backend this [repo](https://github.com/Klerith/tesloshop-backend)
+
+ [**React Native**](https://reactnative.dev) project,  bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+created with 
+```sh
+npx @react-native-community/cli@15.0.0 init productsApp --version 0.76
+```
+
+## Running this project
+![image_result](./repository_media/create_account.png)
+![image_result](./repository_media/login.png)
+![image_result](./repository_media/home.png)
+![image_result](./repository_media/product.png)
+![image_result](./repository_media/product2.png)
+![image_result](./repository_media/picture_from_galery.png)
+
+
+
+To run this project , assuming you have all android and ios running (emulators) 
+
+If not installed install [brew](https://brew.sh/)
+
+> Install brew 
+
+With brew 
+> Install rbenv with ruby min 3.3.0
+
+```shell
+brew install rbenv
+rbenv install 3.3.0
+```
+
+
+Install nvm and node , and with nvm run 
+
+```shell
+brew install nvm
+```
+
+```shell
+nvm install v20.18.0
+```
+inside root application folder  there is a `.nvmrc` file. Run command above to use `Node v20.18.0` version. 
+
+```shell
+nvm use 
+``` 
+> With npm
+
+Then install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+
+```shell
+npm -g install yarn
+```
+
+And then build deps
+```shell
+npm install
+npx pod-install
+nmp start
+```
+
+pod install will use ruby version 3.3.0 because of the file `.ruby-version`
+
+
+Follow react-native cli with `a` to start android and then `i` to start ios. You will see something like `./repository_media/login.png`
+
 
 # Getting Started
 
