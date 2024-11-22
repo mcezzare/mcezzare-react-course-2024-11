@@ -55,19 +55,41 @@ export const ProductScreen = ( { route }: Props ) => {
   return (
     <Formik initialValues={ product } onSubmit={ mutation.mutate }>
       { ( { handleChange, handleSubmit, values, errors, setFieldValue } ) => (
+        // <MainLayout
+        //   title={ values.title }
+        //   subTitle={ `Precio: ${ values.price }` }
+        //   rightAction={ async () => {
+        //     // const photos = await CameraAdapter.takePicture();
+        //     const photos = await CameraAdapter.getPicturesFromLibrary();
+        //     console.log( { photos } );
+        //     setFieldValue( 'images', [ ...values.images, ...photos ] );
+
+        //   } }
+        //   rightActionIcon="image-outline"
+        // >
         <MainLayout
           title={ values.title }
           subTitle={ `Precio: ${ values.price }` }
-          rightAction={ async () => {
-            // const photos = await CameraAdapter.takePicture();
-            const photos = await CameraAdapter.getPicturesFromLibrary();
-            console.log( { photos } );
-            setFieldValue( 'images', [ ...values.images, ...photos ] );
-
-          } }
-          rightActionIcon="image-outline"
+          rightActions={ [
+            {
+              icon: 'image-outline',
+              onPress: async () => {
+                const photos = await CameraAdapter.getPicturesFromLibrary();
+                const formattedPhotos = photos.map( photo => ( { uri: photo } ) );
+                console.log( { formattedPhotos } );
+                setFieldValue( 'images', [ ...values.images, ...formattedPhotos ] );
+              },
+            },
+            {
+              icon: 'camera-outline',
+              onPress: async () => {
+                const photo = await CameraAdapter.takePicture();
+                console.log( { photo } );
+                setFieldValue( 'images', [ ...values.images, photo ] );
+              },
+            },
+          ] }
         >
-
           <ScrollView style={ { flex: 1 } }>
             {/* product images */ }
             <Layout
@@ -184,9 +206,9 @@ export const ProductScreen = ( { route }: Props ) => {
             </Button>
 
 
-            {/* <Text>
+            <Text>
               { JSON.stringify( values, null, 2 ) }
-            </Text>  */}
+            </Text> 
             <Layout style={ { height: 200 } } />
           </ScrollView>
         </MainLayout>
