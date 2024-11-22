@@ -5,6 +5,7 @@ import {
   Layout,
   Button,
   useTheme,
+  Text,
 } from '@ui-kitten/components';
 import { Formik } from 'formik';
 
@@ -21,6 +22,7 @@ import { MyIcon } from '../../components/ui/MyIcon';
 import { ProductImages } from '../../components/products/ProductImages';
 import { Product } from '../../../domain/entities/products';
 import { sizes, genders } from '../../../config/constants/product.constants';
+import { CameraAdapter } from '../../../config/adapters/camera-adapter';
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
 
@@ -56,7 +58,12 @@ export const ProductScreen = ( { route }: Props ) => {
         <MainLayout
           title={ values.title }
           subTitle={ `Precio: ${ values.price }` }
-          rightAction={ () => console.log( 'camera' ) }
+          rightAction={ async () => {
+            const photos = await CameraAdapter.takePicture();
+            console.log( { photos } );
+            setFieldValue( 'images', [ ...values.images, ...photos ] );
+
+          } }
           rightActionIcon="camera-outline"
         >
 
@@ -175,6 +182,10 @@ export const ProductScreen = ( { route }: Props ) => {
               Save
             </Button>
 
+
+            <Text>
+              { JSON.stringify( values, null, 2 ) }
+            </Text> 
             <Layout style={ { height: 200 } } />
           </ScrollView>
         </MainLayout>
